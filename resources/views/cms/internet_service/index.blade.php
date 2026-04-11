@@ -29,7 +29,6 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <!-- <h3 class="card-title">Internet Services</h3> -->
          <a href="{{ route('internet-services.create') }}" class="btn btn-success btn-sm float-right">Add New Service</a>
     </div>
     <div class="card-body">
@@ -57,13 +56,9 @@
                         <a href="{{ route('internet-services.edit', $internetService->id) }}" class="action-btn btn-edit">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <form action="{{ route('internet-services.destroy', $internetService->id) }}" method="POST" style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="action-btn btn-delete">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </form>
+                        <a href="#" onclick="performDestroy('{{ $internetService->id }}', this)" class="action-btn btn-delete">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
                     </td>
                 </tr>
                 @endforeach

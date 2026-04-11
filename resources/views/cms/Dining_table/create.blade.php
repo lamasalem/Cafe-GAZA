@@ -29,10 +29,23 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" onclick="performStore()" class="btn btn-success">Submit</button>
             <a href="{{ route('dining-tables.index') }}" class="btn btn-primary">Go Back</a>
             
         </div>
     </form>
 </div>
+@endsection
+@section('scripts')
+<script>
+    function performStore() {
+     
+        let formData = new FormData();
+        formData.append('table_number', document.getElementById('table_number').value);
+        formData.append('capacity', document.getElementById('capacity').value);
+        formData.append('status', document.getElementById('status').value);
+        // إرسال البيانات للرابط المحدد (الراوت) باستخدام دالة store من ملف crud.js
+        store('/cms/admin/dining-tables', formData);
+    }
+</script>
 @endsection

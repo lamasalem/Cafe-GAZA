@@ -29,9 +29,22 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" onclick="performUpdate('{{ $diningTable->id }}')" class="btn btn-success">Update</button>
             <a href="{{ route('dining-tables.index') }}" class="btn btn-primary">Go Back</a>
         </div>
     </form>
 </div>
+@endsection
+@section('scripts')
+<script>
+    function performUpdate(id) {
+        let formData = new FormData();
+        formData.append('table_number', document.getElementById('table_number').value);
+        formData.append('capacity', document.getElementById('capacity').value);
+        formData.append('status', document.getElementById('status').value);
+
+        // استخدام دالة storeRoute مع تمرير الـ id في الرابط
+        storeRoute('/cms/admin/dining-tables/update/' + id, formData);
+    }
+</script>
 @endsection

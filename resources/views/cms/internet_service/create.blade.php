@@ -9,7 +9,7 @@
     <div class="card-header">
         <h3 class="card-title">Create New Internet Service</h3>
     </div>
-    <form>
+    <form id="create-form">
         <div class="card-body">
             <div class="form-group">
                 <label for="service_name">Service Name</label>
@@ -25,10 +25,24 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" onclick="performStore()" class="btn btn-success">Submit</button>
             <a href="{{ route('internet-services.index') }}" class="btn btn-primary">Go Back</a>
-            
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function performStore() {
+        let formData = new FormData();
+        // قراءة البيانات من الحقول عن طريق الـ id
+        formData.append('service_name', document.getElementById('service_name').value);
+        formData.append('speed', document.getElementById('speed').value);
+        formData.append('price', document.getElementById('price').value);
+
+        // إرسال البيانات للرابط (تأكدي إنه هاد هو نفس مسار الراوت تبعك)
+        store('/cms/admin/internet-services', formData);
+    }
+</script>
 @endsection

@@ -25,9 +25,23 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" onclick="performUpdate('{{ $internetService->id }}')" class="btn btn-success">Update</button>
             <a href="{{ route('internet-services.index') }}" class="btn btn-primary">Go Back</a>
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function performUpdate(id) {
+        let formData = new FormData();
+        formData.append('service_name', document.getElementById('service_name').value);
+        formData.append('speed', document.getElementById('speed').value);
+        formData.append('price', document.getElementById('price').value);
+
+        // مسار التعديل اللي عملناه في ملف web.php
+        storeRoute('/cms/admin/internet-services/update/' + id, formData);
+    }
+</script>
 @endsection

@@ -120,7 +120,7 @@ class DiningTableController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DiningTable $diningTable)
+    public function destroy($id)
     {
         //
     }

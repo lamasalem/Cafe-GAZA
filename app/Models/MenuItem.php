@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class MenuItem extends Model
+{
+    /** @use HasFactory<\Database\Factories\MenuItemFactory> */
+    use HasFactory;
+     protected $fillable = [
+        'Item_Name',
+        'Description',
+        'Price',
+        'Status',
+        'Spicy_Level',
+        'Menu_Categories_ID',
+    ];
+
+    // العلاقة: الـ Item يتبع Category واحدة
+    public function menuCategory()
+    {
+        return $this->belongsTo(MenuCategory::class, 'Menu_Categories_ID');
+    }
+}

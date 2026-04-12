@@ -18,4 +18,5 @@ Route::prefix('cms/admin')->group(function(){
     Route::resource('internet-services', InternetServiceController::class);
     Route::post('/dining-tables/update/{id}', [DiningTableController::class, 'update'])->name('dining-tables.update');
     Route::post('/internet-services/update/{id}', [InternetServiceController::class, 'update'])->name('internet-services.update');
+    Route::post('/menu-categories/update/{id}', [MenuCategoryController::class, 'update'])->name('menu-categories.update');
     });

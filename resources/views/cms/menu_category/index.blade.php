@@ -4,32 +4,9 @@
     Menu Categories
 @endsection
 
-@section('css')
-<style>
-    .action-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-        padding: 5px 10px;
-        border-radius: 4px;
-        font-size: 13px;
-        color: white;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-    }
-    .btn-show { background-color: #17a2b8; }
-    .btn-edit { background-color: #ffc107; color: #212529; }
-    .btn-delete { background-color: #dc3545; }
-    .action-btn:hover { opacity: 0.85; color: white; }
-    .btn-edit:hover { color: #212529; }
-</style>
-@endsection
-
 @section('content')
 <div class="card">
     <div class="card-header">
-        <!-- <h3 class="card-title">Menu Categories</h3> -->
          <a href="{{ route('menu-categories.create') }}" class="btn btn-success btn-sm float-right">Add New Category</a>
     </div>
     <div class="card-body">
@@ -49,28 +26,29 @@
                     <td>{{ $menuCategory->name }}</td>
                     <td>{{ $menuCategory->status }}</td>
                     <td>
-                        <a href="{{ route('menu-categories.show', $menuCategory->id) }}" class="action-btn btn-show">
+                        <a href="{{ route('menu-categories.show', $menuCategory->id) }}" class="btn btn-info btn-sm">
                             <i class="fas fa-eye"></i> Show
                         </a>
-                        <a href="{{ route('menu-categories.edit', $menuCategory->id) }}" class="action-btn btn-edit">
+                        <a href="{{ route('menu-categories.edit', $menuCategory->id) }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <form action="{{ route('menu-categories.destroy', $menuCategory->id) }}" method="POST" style="display:inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="action-btn btn-delete">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </form>
+                        <a href="#" onclick="performDestroy({{ $menuCategory->id }}, this)" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i> Delete
+                        </a>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
-
-        {{-- Pagination --}}
         {{ $menuCategories->links() }}
-
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function performDestroy(id, reference) {
+    confirmDestroy('/cms/admin/menu-categories/' + id, reference);
+}
+</script>
 @endsection

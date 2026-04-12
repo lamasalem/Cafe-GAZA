@@ -24,10 +24,21 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-success">Submit</button>
+            <button type="button" onclick="performStore()" class="btn btn-success">Submit</button>
             <a href="{{ route('menu-categories.index') }}" class="btn btn-primary">Go Back</a>
-            
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function performStore() {
+    let formData = new FormData();
+    formData.append('name', document.getElementById('name').value);
+    formData.append('status', document.getElementById('status').value);
+
+    store('/cms/admin/menu-categories', formData);
+}
+</script>
 @endsection

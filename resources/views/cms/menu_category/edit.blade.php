@@ -24,9 +24,21 @@
             </div>
         </div>
         <div class="card-footer">
-            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" onclick="performUpdate('{{ $menuCategory->id }}')" class="btn btn-success">Update</button>
             <a href="{{ route('menu-categories.index') }}" class="btn btn-primary">Go Back</a>
         </div>
     </form>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function performUpdate(id) {
+    let formData = new FormData();
+    formData.append('name', document.getElementById('name').value);
+    formData.append('status', document.getElementById('status').value);
+
+    storeRoute('/cms/admin/menu-categories/update/' + id, formData);
+}
+</script>
 @endsection

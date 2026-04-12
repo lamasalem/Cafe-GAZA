@@ -56,9 +56,9 @@
                         <a href="{{ route('internet-services.edit', $internetService->id) }}" class="action-btn btn-edit">
                             <i class="fas fa-edit"></i> Edit
                         </a>
-                        <a href="#" onclick="performDestroy('{{ $internetService->id }}', this)" class="action-btn btn-delete">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
+                        <a href="#" onclick="performDestroy({{ $internetService->id }}, this)" class="btn btn-danger btn-sm">
+                           <i class="fas fa-trash"></i> Delete
+                                </a>
                     </td>
                 </tr>
                 @endforeach
@@ -70,4 +70,11 @@
 
     </div>
 </div>
+@endsection
+@section('scripts')
+<script>
+function performDestroy(id, reference) {
+    confirmDestroy('/cms/admin/internet-services/' + id, reference);
+}
+</script>
 @endsection

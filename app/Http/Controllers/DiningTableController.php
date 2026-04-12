@@ -116,6 +116,7 @@ class DiningTableController extends Controller
         return ['redirect' => route('dining-tables.index')];
 
 }}
+<<<<<<< HEAD
 
     /**
      * Remove the specified resource from storage.
@@ -124,4 +125,12 @@ class DiningTableController extends Controller
     {
         //
     }
+=======
+public function destroy($id)
+{
+    $diningTable = DiningTable::findOrFail($id);
+    $diningTable->delete();
+}
+
+>>>>>>> 8c4974e8c38802fb10a2688e12a80daad36496f2
 }

@@ -119,8 +119,9 @@ class InternetServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(InternetService $internetService)
-    {
-      
-    }
+   public function destroy($id)
+{
+    $internetService = InternetService::findOrFail($id);
+    $internetService->delete();
+}
 }

@@ -7,12 +7,12 @@ use App\Models\MenuCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class MenuItemController extends Controller
+class MenuitemController extends Controller
 {
     public function index()
     {
         // with = Eager Loading لتحسين الأداء
-        $menuItems = MenuItem::with('menuCategory')->orderBy('id', 'desc')->paginate(10);
+        $menuItems = Menuitem::with('menuCategory')->orderBy('id', 'desc')->paginate(10);
         return response()->view('cms.Menu_item.index', compact('menuItems'));
     }
 

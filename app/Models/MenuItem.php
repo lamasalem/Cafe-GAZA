@@ -23,4 +23,9 @@ class MenuItem extends Model
     {
         return $this->belongsTo(MenuCategory::class, 'Menu_Categories_ID');
     }
+    
+    public function orderDetails()
+{
+    return $this->hasMany(OrderDetail::class, 'Menu_Items_ID');
+}
 }

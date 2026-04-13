@@ -14,4 +14,17 @@ class InternetService extends Model
         'speed',
         'price',
     ];
+
+    public function internetSessions()
+{
+    return $this->hasMany(InternetSession::class, 'Internet_Services_ID');
+}
+
+protected static function boot()
+{
+    parent::boot();
+    static::deleting(function ($internetService) {
+        $internetService->internetSessions()->delete();
+    });
+}
 }

@@ -207,172 +207,147 @@
         </div>
       </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="nav-icon fas fa-house-user"></i>
-                  <p>Home</p>
-                </a>
-              </li>
+     <!-- Sidebar Menu -->
+<nav class="mt-2">
+  <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-            </ul>
-          </li>
-          <li class="nav-header"> Managment</li>
-        
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-file-invoice-dollar"></i>
-              <p>
-                 Orders & Invoices
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>POS (Point of Sale)</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Orders</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Order History & Invoices
-</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+    <!-- Dashboard -->
+    <li class="nav-item">
+      <a href="{{ url('cms/admin') }}" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Dashboard</p>
+      </a>
+    </li>
 
-          <li class="nav-item">
-    <a href="{{ route('internet-services.index') }}" class="nav-link">
-        <i class="nav-icon fas fa-wifi"></i>
-        <p>
-            Internet Services
-        </p>
-    </a>
+    <li class="nav-header">Management</li>
+
+    <!-- Orders -->
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+    <p>Orders <i class="fas fa-angle-left right"></i></p>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="{{ route('orders.index') }}" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>All Orders</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{ route('orders.create') }}" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>New Order</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{ route('order-details.index') }}" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Order Details</p>
+      </a>
+    </li>
+  </ul>
 </li>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="pages/mailbox/mailbox.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>All Internet Packages</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="pages/mailbox/compose.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Sessions</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-         
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-hamburger"></i>
-              <p>
-                Menu Management
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('menu-items.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Menu Items</p>
-                </a>
-              </li>
-            </ul>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{ route('menu-categories.index') }}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Menu Categories</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-           <li class="nav-item">
-    <a href="{{ route('dining-tables.index') }}" class="nav-link">
+
+    <!-- Dining Tables -->
+    <li class="nav-item">
+      <a href="{{ route('dining-tables.index') }}" class="nav-link">
         <i class="nav-icon fas fa-utensils"></i>
-        <p>
-            Dining Tables
-        </p>
-    </a>
+        <p>Dining Tables</p>
+      </a>
+    </li>
+
+    <!-- Menu Management -->
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-hamburger"></i>
+        <p>Menu Management <i class="fas fa-angle-left right"></i></p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="{{ route('menu-items.index') }}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Menu Items</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{{ route('menu-categories.index') }}" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Menu Categories</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <!-- Internet Services -->
+<li class="nav-item">
+  <a href="#" class="nav-link">
+    <i class="nav-icon fas fa-wifi"></i>
+    <p>Internet <i class="fas fa-angle-left right"></i></p>
+  </a>
+  <ul class="nav nav-treeview">
+    <li class="nav-item">
+      <a href="{{ route('internet-services.index') }}" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Services</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{{ route('internet-sessions.index') }}" class="nav-link">
+        <i class="far fa-circle nav-icon"></i>
+        <p>Sessions</p>
+      </a>
+    </li>
+  </ul>
 </li>
 
-              <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fab fa-cc-visa"></i>
-              <p>
-                Financial Reports
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-             </li>
+    <!-- User Management-->
+    <li class="nav-header">User Management</li>
 
-             <li class="nav-header">USER Managment
-              <i class="nav-icon fas fa-user-cog"></i>
-             </li>
-        
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              
-              <p>
-                 Employees
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <a href="#" class="nav-link">
-              
-              <p>
-                 Customers
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
+<li class="nav-item">
+  <a href="{{ route('users.index') }}" class="nav-link">
+    <i class="nav-icon fas fa-users"></i>
+    <p>Users</p>
+  </a>
 </li>
-          <li class="nav-header">setting</li>
-          <li class="nav-item">
-            <a href="iframe.html" class="nav-link">
-              <i class="nav-icon fas fa-ellipsis-h"></i>
-              <p>edit your profile</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
-              <p>Change password</p>
-            </a>
-          </li>
-           <li class="nav-item">
-            <a href="https://adminlte.io/docs/3.1/" class="nav-link">
-              <i class="nav-icon fas fa-file"></i>
-              <p>logout</p>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+<li class="nav-item">
+  <a href="{{ route('customers.index') }}" class="nav-link">
+    <i class="nav-icon fas fa-user-tag"></i>
+    <p>Customers</p>
+  </a>
+</li>
+<li class="nav-item">
+  <a href="{{ route('employees.index') }}" class="nav-link">
+    <i class="nav-icon fas fa-user-tie"></i>
+    <p>Employees</p>
+  </a>
+</li>
+
+    <li class="nav-header">Settings</li>
+
+    <!-- Settings -->
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-user-edit"></i>
+        <p>Edit Profile</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-lock"></i>
+        <p>Change Password</p>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link">
+        <i class="nav-icon fas fa-sign-out-alt"></i>
+        <p>Logout</p>
+      </a>
+    </li>
+
+  </ul>
+</nav>
+<!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>

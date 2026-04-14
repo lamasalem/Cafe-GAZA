@@ -18,8 +18,12 @@ Route::get('/', function () {
 
 Route::prefix('cms/admin')->group(function(){
     Route::view('/', 'cms.parent');
-    Route::view('/temp', 'cms.temp');
-
+    Route::view('/temp', 'cms.temp'); 
+    Route::get('orders/{id}/restore', [OrderController::class, 'restore'])->name('orders.restore');
+    Route::get('orders-force/{id}', [OrderController::class, 'force'])->name('orders.force');
+    Route::get('orders-force', [OrderController::class, 'forceAll'])->name('orders.forceAll');
+     
+    Route::get('orders/trashed', [OrderController::class, 'trashed'])->name('orders.trashed');
     Route::resource('dining-tables', DiningTableController::class);
     Route::resource('menu-categories', MenuCategoryController::class);
     Route::resource('internet-services', InternetServiceController::class);
@@ -30,7 +34,6 @@ Route::prefix('cms/admin')->group(function(){
     Route::resource('customers', CustomerController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('internet-sessions', InternetSessionController::class);
-
 
 
     Route::post('/dining-tables/update/{id}', [DiningTableController::class, 'update'])->name('dining-tables.update');

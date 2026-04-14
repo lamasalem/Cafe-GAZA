@@ -15,8 +15,9 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
-                    <th>Status</th>
+                    <th>Status</th> <th>Items Count</th>
                     <th>Actions</th>
+                   
                 </tr>
             </thead>
             <tbody>
@@ -25,7 +26,8 @@
                     <td>{{ $menuCategory->id }}</td>
                     <td>{{ $menuCategory->name }}</td>
                     <td>{{ $menuCategory->status }}</td>
-                    <td>
+                    <td><span class="badge bg-info">{{ $menuCategory->menu_items_count }}</span></td>
+                     <td>
                         <a href="{{ route('menu-categories.show', $menuCategory->id) }}" class="btn btn-info btn-sm">
                             <i class="fas fa-eye"></i> Show
                         </a>

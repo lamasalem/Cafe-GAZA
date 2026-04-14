@@ -13,7 +13,7 @@ class MenuCategoryController extends Controller
      */
   public function index()
 {
-    $menuCategories = MenuCategory::orderBy('id', 'desc')->paginate(10);
+    $menuCategories = MenuCategory::withCount('menuItems')->orderBy('id', 'desc')->paginate(10);
     return response()->view('cms.menu_category.index', compact('menuCategories'));
 }
 
@@ -59,8 +59,9 @@ class MenuCategoryController extends Controller
      */
     public function show(MenuCategory $menuCategory)
     {
-        //
-    }
+        $menuCategory->load('menuItems');
+
+    return response()->view('cms.menu_category.show', compact('menuCategory'));}
 
     /**
      * Show the form for editing the specified resource.

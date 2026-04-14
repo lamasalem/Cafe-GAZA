@@ -8,6 +8,8 @@
 <div class="card">
     <div class="card-header">
         <a href="{{ route('orders.create') }}" class="btn btn-success btn-sm float-right">Add New Order</a>
+        <a href="{{ route('orders.trashed') }}" class="btn btn-outline-danger">
+            <i class="fas fa-trash-alt"></i> View Trash </a>
     </div>
     <div class="card-body">
         <table class="table table-bordered table-hover text-center">

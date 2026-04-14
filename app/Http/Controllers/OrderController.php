@@ -94,4 +94,33 @@ class OrderController extends Controller
         $order = Order::findOrFail($id);
         $order->delete();
     }
+    public function trashed()
+{
+   
+    $orders = Order::onlyTrashed()->orderBy('deleted_at', 'desc')->paginate(10);
+    
+    return response()->view('cms.order.trashed', compact('orders'));
+}
+public function restore($id)
+{
+    // بنبحث عن الطلب في المحذوفات فقط
+    $order = Order::onlyTrashed()->findOrFail($id)->restore();
+
+    return redirect()->back()->with('success');}
+    
+    public function force($id)
+{
+    // بنبحث عن الطلب في المحذوفات فقط
+    $order = Order::onlyTrashed()->findOrFail($id)->forceDelete();
+
+    return redirect()->back()->with('success');}
+
+        public function forceAll()
+{
+    
+    $order = Order::onlyTrashed()->forceDelete();
+
+    return redirect()->back()->with('success');}
+    
+    
 }

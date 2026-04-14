@@ -34,8 +34,8 @@ class UserController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['icon' => 'error', 'title' => $validator->errors()->first()], 400);
-        }
-
+        }else{
+        
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
@@ -43,7 +43,7 @@ class UserController extends Controller
         $user->role = $request->role;
         $user->save();
 
-        return response()->json(['icon' => 'success', 'title' => 'تمت الإضافة بنجاح']);
+        return response()->json(['icon' => 'success', 'title' => 'تمت الإضافة بنجاح']);}
     }
 
     // 4. عرض صفحة التعديل (Edit)

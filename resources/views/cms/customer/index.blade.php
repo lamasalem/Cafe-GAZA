@@ -1,51 +1,68 @@
 @extends('cms.parent')
 
-@section('title')
-    Customers
-@endsection
+@section('title', 'Customers List')
+
+@section('page-name', 'Index Customer')
+@section('main-page', 'Customer')
+@section('sub-page', 'Index')
 
 @section('content')
-<div class="card">
-    <div class="card-header">
-        <a href="{{ route('customers.create') }}" class="btn btn-success btn-sm float-right">Add New Customer</a>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Customers List</h3>
+                        <div class="card-tools">
+                            <a href="{{ route('customers.create') }}" class="btn btn-success">Add New Customer</a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px">#</th>
+                                    <th>Full Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Address</th> <th style="width: 150px">Settings</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($customers as $customer)
+                                <tr>
+                                    <td>{{ $customer->id }}</td>
+                                    <td>{{ $customer->user->name ?? 'N/A' }}</td>
+                                    <td>{{ $customer->user->email ?? 'N/A' }}</td>
+                                    <td>{{ $customer->user->phone ?? 'N/A' }}</td>
+                                    <td>{{ $customer->address }}</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-info">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button type="button" onclick="performDestroy({{ $customer->id }}, this)" class="btn btn-danger">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="card-body">
-        <table class="table table-bordered table-hover text-center">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Email</th>
-                    <th>Created At</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($customers as $customer)
-                <tr>
-                    <td>{{ $customer->id }}</td>
-                    <td>{{ $customer->Email }}</td>
-                    <td>{{ $customer->created_at }}</td>
-                    <td>
-                        <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning btn-sm">
-                            <i class="fas fa-edit"></i> Edit
-                        </a>
-                        <a href="#" onclick="performDestroy({{ $customer->id }}, this)" class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash"></i> Delete
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        {{ $customers->links() }}
-    </div>
-</div>
+</section>
 @endsection
 
 @section('scripts')
 <script>
-function performDestroy(id, reference) {
-    confirmDestroy('/cms/admin/customers/' + id, reference);
-}
+    function performDestroy(id, reference) {
+        confirmDestroy('/cms/admin/customers/' + id, reference);
+    }
 </script>
 @endsection

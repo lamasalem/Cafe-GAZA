@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
-        Schema::create('employees', function (Blueprint $table) {
-            $table->id();
-            $table->string('Job_Title', 50);
-            $table->string('Email', 45);
-            $table->string('Password', 255);
-            $table->timestamps();
-        });
-    }
+   public function up()
+{
+    Schema::create('employees', function (Blueprint $table) {
+        $table->id();
+        $table->string('job_title'); // الحقل الخاص بالموظف فقط
+        $table->timestamps();
+    });
+}
 
     public function down(): void
     {

@@ -17,4 +17,7 @@ class Customer extends Model
     protected $hidden = [
         'Password',
     ];
+    public function user() {
+    return $this->morphOne(User::class, 'actor');
+}
 }

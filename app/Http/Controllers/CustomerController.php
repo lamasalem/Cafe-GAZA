@@ -11,7 +11,9 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        $customers = Customer::orderBy('id', 'desc')->paginate(10);
+        // بنجيب الزبائن ومعاهم بيانات اليوزر المرتبط فيهم
+        $customers = Customer::with('user')->get(); 
+        
         return response()->view('cms.customer.index', compact('customers'));
     }
 
@@ -20,30 +22,44 @@ class CustomerController extends Controller
         return response()->view('cms.customer.create');
     }
 
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'Email' => 'required|email|unique:customers,Email',
-            'Password' => 'required|string|min:6',
+   public function store(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'name'     => 'required|string|max:100',
+        'email'    => 'required|email|unique:users,email',
+        'phone'    => 'required|string|max:20',
+        'password' => 'required|string|min:6',
+        'address'  => 'nullable|string|max:255', // هاد الحقل الخاص بالكاستمر (عدليه حسب جدولك)
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json([
+            'icon'  => 'error',
+            'title' => $validator->getMessageBag()->first()
+        ], 400);
+    } 
+    
+    $customer = new Customer();
+    $customer->address = $request->get('address'); // حفظ الحقل الخاص
+    $isSaved = $customer->save();
+
+    if ($isSaved) {
+        $customer->user()->create([
+            'name'     => $request->get('name'),
+            'email'    => $request->get('email'),
+            'phone'    => $request->get('phone'),
+            'password' => Hash::make($request->get('password')),
+            'role'     => 'customer',
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'icon' => 'error',
-                'title' => $validator->getMessageBag()->first()
-            ], 400);
-        } else {
-            $customer = new Customer();
-            $customer->Email = $request->get('Email');
-            $customer->Password = Hash::make($request->get('Password'));
-            $customer->save();
-
-            return response()->json([
-                'icon' => 'success',
-                'title' => 'Customer added successfully!'
-            ], 200);
-        }
+        return response()->json([
+            'icon'  => 'success',
+            'title' => 'تم إضافة الزبون بنجاح!'
+        ], 200);
     }
+
+    return response()->json(['icon' => 'error', 'title' => 'فشل الإضافة'], 400);
+}
 
     public function show($id)
     {
@@ -57,33 +73,63 @@ class CustomerController extends Controller
         return response()->view('cms.customer.edit', compact('customer'));
     }
 
-    public function update(Request $request, $id)
-    {
-        $validator = Validator::make($request->all(), [
-            'Email' => 'required|email|unique:customers,Email,' . $id,
-            'Password' => 'nullable|string|min:6',
-        ]);
+ public function update(Request $request, $id)
+{
+    $customer = Customer::with('user')->findOrFail($id);
+    $userId = $customer->user ? $customer->user->id : null;
 
-        if ($validator->fails()) {
-            return response()->json([
-                'icon' => 'error',
-                'title' => $validator->getMessageBag()->first()
-            ], 400);
-        } else {
-            $customer = Customer::findOrFail($id);
-            $customer->Email = $request->get('Email');
-            if ($request->get('Password')) {
-                $customer->Password = Hash::make($request->get('Password'));
-            }
-            $customer->save();
+    $validator = Validator::make($request->all(), [
+        'name'     => 'required|string|max:100',
+        'email'    => 'required|email|unique:users,email,' . $userId, // استثناء إيميل الكاستمر الحالي
+        'phone'    => 'required|string|max:20',
+        'password' => 'nullable|string|min:6',
+        'address'  => 'nullable|string|max:255',
+    ]);
 
-            return ['redirect' => route('customers.index')];
-        }
+    if ($validator->fails()) {
+        return response()->json([
+            'icon'  => 'error',
+            'title' => $validator->getMessageBag()->first()
+        ], 400);
     }
 
-    public function destroy($id)
+    $customer->address = $request->get('address');
+    $isSaved = $customer->save();
+
+    if ($isSaved) {
+        $userData = [
+            'name'  => $request->get('name'),
+            'email' => $request->get('email'),
+            'phone' => $request->get('phone'),
+        ];
+
+        if ($request->filled('password')) {
+            $userData['password'] = Hash::make($request->get('password'));
+        }
+
+        $customer->user()->update($userData);
+
+        return response()->json(['icon' => 'success', 'title' => 'تم التعديل بنجاح!'], 200);
+    }
+
+    return response()->json(['icon' => 'error', 'title' => 'فشل التعديل'], 400);
+}
+
+  public function destroy($id)
     {
         $customer = Customer::findOrFail($id);
-        $customer->delete();
+        
+        // بنحذف اليوزر المرتبط أولاً (الاسم، الإيميل، الباسوورد...)
+        if($customer->user) {
+            $customer->user()->delete();
+        }
+        
+        // بعدين بنحذف الكاستمر نفسه من جدول الكاستمرز
+        $isDeleted = $customer->delete();
+
+        return response()->json([
+            'icon'  => $isDeleted ? 'success' : 'error',
+            'title' => $isDeleted ? 'تم الحذف بنجاح' : 'فشل الحذف'
+        ], $isDeleted ? 200 : 400);
     }
 }

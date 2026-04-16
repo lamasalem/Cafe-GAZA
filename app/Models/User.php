@@ -21,6 +21,11 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',      
+    'address',    
+    'status',     
+    'actor_id',  
+    'actor_type',
     ];
 
     /**
@@ -32,6 +37,9 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+    public function actor() {
+    return $this->morphTo();
+}
 
     /**
      * Get the attributes that should be cast.

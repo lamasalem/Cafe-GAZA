@@ -6,15 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    public function up(): void
-    {
-        Schema::create('customers', function (Blueprint $table) {
-            $table->id();
-            $table->string('Email', 45);
-            $table->string('Password', 255);
-            $table->timestamps();
-        });
-    }
+   public function up()
+{
+    Schema::create('customers', function (Blueprint $table) {
+        $table->id();
+        $table->string('address')->nullable();
+        $table->timestamps();
+    });
+}
 
     public function down(): void
     {

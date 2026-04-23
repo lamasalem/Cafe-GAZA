@@ -14,13 +14,11 @@ class MenuCategory extends Model
     'status',
 ];
 
-// العلاقة: الـ Category تحتوي على عدة Items
     public function menuItems()
     {
         return $this->hasMany(MenuItem::class, 'Menu_Categories_ID');
     }
 
-    // Cascade on Delete
     protected static function boot()
     {
         parent::boot();

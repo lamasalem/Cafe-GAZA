@@ -18,7 +18,6 @@ class MenuItem extends Model
         'Menu_Categories_ID',
     ];
 
-    // العلاقة: الـ Item يتبع Category واحدة
     public function menuCategory()
     {
         return $this->belongsTo(MenuCategory::class, 'Menu_Categories_ID');

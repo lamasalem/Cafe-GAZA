@@ -11,9 +11,8 @@ class CustomerController extends Controller
 {
     public function index()
     {
-        // بنجيب الزبائن ومعاهم بيانات اليوزر المرتبط فيهم
-        $customers = Customer::with('user')->get(); 
-        
+        $customers = Customer::with('user')->get();
+
         return response()->view('cms.customer.index', compact('customers'));
     }
 
@@ -22,44 +21,44 @@ class CustomerController extends Controller
         return response()->view('cms.customer.create');
     }
 
-   public function store(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'name'     => 'required|string|max:100',
-        'email'    => 'required|email|unique:users,email',
-        'phone'    => 'required|string|max:20',
-        'password' => 'required|string|min:6',
-        'address'  => 'nullable|string|max:255', // هاد الحقل الخاص بالكاستمر (عدليه حسب جدولك)
-    ]);
-
-    if ($validator->fails()) {
-        return response()->json([
-            'icon'  => 'error',
-            'title' => $validator->getMessageBag()->first()
-        ], 400);
-    } 
-    
-    $customer = new Customer();
-    $customer->address = $request->get('address'); // حفظ الحقل الخاص
-    $isSaved = $customer->save();
-
-    if ($isSaved) {
-        $customer->user()->create([
-            'name'     => $request->get('name'),
-            'email'    => $request->get('email'),
-            'phone'    => $request->get('phone'),
-            'password' => Hash::make($request->get('password')),
-            'role'     => 'customer',
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|string|max:20',
+            'password' => 'required|string|min:6',
+            'address' => 'nullable|string|max:255',
         ]);
 
-        return response()->json([
-            'icon'  => 'success',
-            'title' => 'تم إضافة الزبون بنجاح!'
-        ], 200);
-    }
+        if ($validator->fails()) {
+            return response()->json([
+                'icon' => 'error',
+                'title' => $validator->getMessageBag()->first()
+            ], 400);
+        }
 
-    return response()->json(['icon' => 'error', 'title' => 'فشل الإضافة'], 400);
-}
+        $customer = new Customer();
+        $customer->address = $request->get('address');
+        $isSaved = $customer->save();
+
+        if ($isSaved) {
+            $customer->user()->create([
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'phone' => $request->get('phone'),
+                'password' => Hash::make($request->get('password')),
+                'role' => 'customer',
+            ]);
+
+            return response()->json([
+                'icon' => 'success',
+                'title' => 'تم إضافة الزبون بنجاح'
+            ], 200);
+        }
+
+        return response()->json(['icon' => 'error', 'title' => 'فشلت الإضافة'], 400);
+    }
 
     public function show($id)
     {
@@ -73,62 +72,60 @@ class CustomerController extends Controller
         return response()->view('cms.customer.edit', compact('customer'));
     }
 
- public function update(Request $request, $id)
-{
-    $customer = Customer::with('user')->findOrFail($id);
-    $userId = $customer->user ? $customer->user->id : null;
+    public function update(Request $request, $id)
+    {
+        $customer = Customer::with('user')->findOrFail($id);
+        $userId = $customer->user ? $customer->user->id : null;
 
-    $validator = Validator::make($request->all(), [
-        'name'     => 'required|string|max:100',
-        'email'    => 'required|email|unique:users,email,' . $userId, // استثناء إيميل الكاستمر الحالي
-        'phone'    => 'required|string|max:20',
-        'password' => 'nullable|string|min:6',
-        'address'  => 'nullable|string|max:255',
-    ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users,email,' . $userId,
+            'phone' => 'required|string|max:20',
+            'password' => 'nullable|string|min:6',
+            'address' => 'nullable|string|max:255',
+        ]);
 
-    if ($validator->fails()) {
-        return response()->json([
-            'icon'  => 'error',
-            'title' => $validator->getMessageBag()->first()
-        ], 400);
-    }
-
-    $customer->address = $request->get('address');
-    $isSaved = $customer->save();
-
-    if ($isSaved) {
-        $userData = [
-            'name'  => $request->get('name'),
-            'email' => $request->get('email'),
-            'phone' => $request->get('phone'),
-        ];
-
-        if ($request->filled('password')) {
-            $userData['password'] = Hash::make($request->get('password'));
+        if ($validator->fails()) {
+            return response()->json([
+                'icon' => 'error',
+                'title' => $validator->getMessageBag()->first()
+            ], 400);
         }
 
-        $customer->user()->update($userData);
+        $customer->address = $request->get('address');
+        $isSaved = $customer->save();
 
-        return response()->json(['icon' => 'success', 'title' => 'تم التعديل بنجاح!'], 200);
+        if ($isSaved) {
+            $userData = [
+                'name' => $request->get('name'),
+                'email' => $request->get('email'),
+                'phone' => $request->get('phone'),
+            ];
+
+            if ($request->filled('password')) {
+                $userData['password'] = Hash::make($request->get('password'));
+            }
+
+            $customer->user()->update($userData);
+
+            return response()->json(['icon' => 'success', 'title' => 'تم التعديل بنجاح!'], 200);
+        }
+
+        return response()->json(['icon' => 'error', 'title' => 'فشل التعديل'], 400);
     }
 
-    return response()->json(['icon' => 'error', 'title' => 'فشل التعديل'], 400);
-}
-
-  public function destroy($id)
+    public function destroy($id)
     {
         $customer = Customer::findOrFail($id);
-        
-        // بنحذف اليوزر المرتبط أولاً (الاسم، الإيميل، الباسوورد...)
-        if($customer->user) {
+
+        if ($customer->user) {
             $customer->user()->delete();
         }
-        
-        // بعدين بنحذف الكاستمر نفسه من جدول الكاستمرز
+
         $isDeleted = $customer->delete();
 
         return response()->json([
-            'icon'  => $isDeleted ? 'success' : 'error',
+            'icon' => $isDeleted ? 'success' : 'error',
             'title' => $isDeleted ? 'تم الحذف بنجاح' : 'فشل الحذف'
         ], $isDeleted ? 200 : 400);
     }

@@ -103,24 +103,22 @@ class OrderController extends Controller
 }
 public function restore($id)
 {
-    // بنبحث عن الطلب في المحذوفات فقط
     $order = Order::onlyTrashed()->findOrFail($id)->restore();
 
-    return redirect()->back()->with('success');}
+    return redirect()->back()->with('نجح');}
     
     public function force($id)
 {
-    // بنبحث عن الطلب في المحذوفات فقط
     $order = Order::onlyTrashed()->findOrFail($id)->forceDelete();
 
-    return redirect()->back()->with('success');}
+    return redirect()->back()->with('نجح');}
 
         public function forceAll()
 {
     
     $order = Order::onlyTrashed()->forceDelete();
 
-    return redirect()->back()->with('success');}
+    return redirect()->back()->with('نجح');}
     
     
 }

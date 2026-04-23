@@ -11,14 +11,12 @@ class MenuitemController extends Controller
 {
     public function index()
     {
-        // with = Eager Loading لتحسين الأداء
         $menuItems = Menuitem::with('menuCategory')->orderBy('id', 'desc')->paginate(10);
         return response()->view('cms.Menu_item.index', compact('menuItems'));
     }
 
     public function create()
     {
-        // جلب الـ Categories لعرضها في الـ Dropdown
         $menuCategories = MenuCategory::all();
         return response()->view('cms.Menu_item.create', compact('menuCategories'));
     }
@@ -51,7 +49,7 @@ class MenuitemController extends Controller
 
             return response()->json([
                 'icon' => 'success',
-                'title' => 'Menu item added successfully!'
+                'title' => 'تم اضافة الصنف بنجاح'
             ], 200);
         }
     }

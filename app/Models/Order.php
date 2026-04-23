@@ -16,13 +16,11 @@ class Order extends Model
         'Dining_Tables_ID',
     ];
 
-    // الطلب يتبع طاولة واحدة
     public function diningTable()
     {
         return $this->belongsTo(DiningTable::class, 'Dining_Tables_ID');
     }
 
-    // الطلب يحتوي على عدة تفاصيل (لاحقاً)
     public function orderDetails()
     {
         return $this->hasMany(OrderDetail::class, 'Orders_ID');

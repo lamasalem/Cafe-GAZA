@@ -49,7 +49,7 @@ class OrderDetailController extends Controller
 
             return response()->json([
                 'icon' => 'success',
-                'title' => 'Order detail added successfully!'
+                'title' => 'تم الاضافة بنجاح'
             ], 200);
         }
     }

@@ -41,7 +41,7 @@ class DiningTableController extends Controller
 
             return response()->json([
                 'icon' => 'success',
-                'title' => 'تم إضافة الطاولة بنجاح!'
+                'title' => 'تم إضافة الطاولة بنجاح'
             ], 200);
         }
     }

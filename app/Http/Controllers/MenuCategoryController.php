@@ -8,26 +8,17 @@ use Illuminate\Support\Facades\Validator;
 
 class MenuCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-  public function index()
-{
-    $menuCategories = MenuCategory::withCount('menuItems')->orderBy('id', 'desc')->paginate(10);
-    return response()->view('cms.menu_category.index', compact('menuCategories'));
-}
+    public function index()
+    {
+        $menuCategories = MenuCategory::withCount('menuItems')->orderBy('id', 'desc')->paginate(10);
+        return response()->view('cms.menu_category.index', compact('menuCategories'));
+    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
-{
-    return response()->view('cms.menu_category.create');
-}
+    {
+        return response()->view('cms.menu_category.create');
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -48,33 +39,24 @@ class MenuCategoryController extends Controller
 
             return response()->json([
                 'icon' => 'success',
-                'title' => 'تم إضافة الصنف بنجاح!'
+                'title' => 'تم إضافة الصنف بنجاح'
             ], 200);
         }
     }
 
-
-    /**
-     * Display the specified resource.
-     */
     public function show(MenuCategory $menuCategory)
     {
         $menuCategory->load('menuItems');
 
-    return response()->view('cms.menu_category.show', compact('menuCategory'));}
+        return response()->view('cms.menu_category.show', compact('menuCategory'));
+    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
-{
-    $menuCategory = MenuCategory::findOrFail($id);
-    return response()->view('cms.menu_category.edit', compact('menuCategory'));
-}
+    {
+        $menuCategory = MenuCategory::findOrFail($id);
+        return response()->view('cms.menu_category.edit', compact('menuCategory'));
+    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -97,7 +79,6 @@ class MenuCategoryController extends Controller
         }
     }
 
-    // دالة الحذف - Destroy
     public function destroy($id)
     {
         $menuCategory = MenuCategory::findOrFail($id);

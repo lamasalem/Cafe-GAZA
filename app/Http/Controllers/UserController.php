@@ -25,7 +25,7 @@ class UserController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6',
-            'role' => 'required|in:admin,employee',
+            'role' => 'required|in:employee,customer',
         ]);
 
         if ($validator->fails()) {

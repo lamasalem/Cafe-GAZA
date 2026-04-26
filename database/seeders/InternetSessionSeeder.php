@@ -12,6 +12,6 @@ class InternetSessionSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        \App\Models\InternetSession::factory(10)->create();
     }
 }

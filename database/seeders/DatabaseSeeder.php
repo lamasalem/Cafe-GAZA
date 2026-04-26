@@ -2,13 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\DiningTable;
 use Illuminate\Database\Seeder;
 
-class DiningTableSeeder extends Seeder
+class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        DiningTable::factory(20)->create();
+        $this->call([
+            DiningTableSeeder::class,
+            MenuCategorySeeder::class,
+            InternetServiceSeeder::class,
+            EmployeeSeeder::class,
+            CustomerSeeder::class,
+            OrderSeeder::class,
+            MenuItemSeeder::class,
+            InternetSessionSeeder::class,
+        ]);
     }
 }

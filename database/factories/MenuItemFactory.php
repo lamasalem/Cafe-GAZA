@@ -2,22 +2,25 @@
 
 namespace Database\Factories;
 
+use App\Models\MenuCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\MenuItem>
- */
 class MenuItemFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'Item_Name' => fake()->randomElement([
+                'Hot drink',
+                'Cold drink',
+                'Dessert',
+                'Sandwiches',
+            ]),
+            'Description' => fake()->sentence(),
+            'Price' => fake()->randomFloat(2, 2, 50),
+            'Status' => fake()->randomElement(['available', 'unavailable']),
+            'Spicy_Level' => fake()->randomElement(['mild', 'medium', 'hot', null]),
+            'Menu_Categories_ID' => MenuCategory::inRandomOrder()->first()->id,
         ];
     }
 }

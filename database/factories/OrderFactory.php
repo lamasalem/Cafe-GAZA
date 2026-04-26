@@ -2,22 +2,18 @@
 
 namespace Database\Factories;
 
+use App\Models\DiningTable;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Order>
- */
 class OrderFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'Order_Date' => fake()->dateTimeBetween('-1 month', 'now'),
+            'Total_Amount' => fake()->randomFloat(2, 10, 500),
+            'Payment_Method' => fake()->randomElement(['cash', 'card', 'e-wallet']),
+            'Dining_Tables_ID' => DiningTable::inRandomOrder()->first()->id,
         ];
     }
 }

@@ -71,18 +71,10 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('users.edit', $user->id) }}" class="action-btn btn-edit">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
 
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="action-btn btn-delete"
-                                        onclick="return confirm('Are you sure you want to delete this user?')">
-                                        <i class="fas fa-trash"></i> Delete
-                                    </button>
-                                </form>
+                                <a href="#" onclick="performDestroy({{ $user->id }}, this)" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i> Delete
+                                </a>
                             </td>
                         </tr>
                     @endforeach
@@ -97,5 +89,9 @@
 @endsection
 
 @section('scripts')
-
+    <script>
+        function performDestroy(id, reference) {
+            confirmDestroy('/cms/admin/users/' + id, reference);
+        }
+    </script>
 @endsection

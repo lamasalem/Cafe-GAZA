@@ -45,32 +45,12 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $user = User::findOrFail($id);
-        return view('cms.users.edit', compact('user'));
+ 
     }
 
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'sometimes|required|string',
-            'email' => 'sometimes|required|email|unique:users,email,' . $id,
-            'role' => 'sometimes|required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['icon' => 'error', 'title' => $validator->errors()->first()], 400);
-        } else {
-            $user = User::findOrFail($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
-            $user->role = $request->role;
-            if ($request->filled('password')) {
-                $user->password = Hash::make($request->password);
-            }
-            $user->save();
-        }
-
-        return ['redirect' => route('users.index')];
+      
     }
 
     public function destroy($id)

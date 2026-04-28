@@ -11,10 +11,12 @@ class MenuItemFactory extends Factory
     {
         return [
             'Item_Name' => fake()->randomElement([
-                'Hot drink',
-                'Cold drink',
-                'Dessert',
-                'Sandwiches',
+               
+                 'Hot Drinks', 'Cold Drinks', 'Sandwiches', 'Desserts',
+                'Salads', 'Main Courses', 'Appetizers', 'Soups',
+                'Breakfast', 'Pasta', 'Pizza', 'Grills',
+                'Juices', 'Smoothies', 'Cakes', 'Ice Cream',
+                'Seafood', 'Burgers', 'Wraps', 'Sides'
             ]),
             'Description' => fake()->sentence(),
             'Price' => fake()->randomFloat(2, 2, 50),

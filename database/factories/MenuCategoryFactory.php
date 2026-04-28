@@ -10,11 +10,10 @@ class MenuCategoryFactory extends Factory
     {
         return [
             'name' => fake()->randomElement([
-                'Hot Drinks', 'Cold Drinks', 'Sandwiches', 'Desserts',
-                'Salads', 'Main Courses', 'Appetizers', 'Soups',
-                'Breakfast', 'Pasta', 'Pizza', 'Grills',
-                'Juices', 'Smoothies', 'Cakes', 'Ice Cream',
-                'Seafood', 'Burgers', 'Wraps', 'Sides'
+                'Hot drink',
+                'Cold drink',
+                'Dessert',
+                'Sandwiches',
             ]),
             'status' => fake()->randomElement(['active', 'inactive']),
         ];
